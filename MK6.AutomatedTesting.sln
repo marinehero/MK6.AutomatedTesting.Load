@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK6.AutomatedTesting.Runner.Tests", "MK6.AutomatedTesting.Runner.Tests\MK6.AutomatedTesting.Runner.Tests.csproj", "{1960F5F8-4F7C-451F-8268-5EC67FE6FC18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK6.AutomatedTesting.UI", "MK6.AutomatedTesting.UI\MK6.AutomatedTesting.UI.csproj", "{706A400F-797D-4DCC-B3CE-F4370A6D5BDE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +38,6 @@ Global
 		{1960F5F8-4F7C-451F-8268-5EC67FE6FC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1960F5F8-4F7C-451F-8268-5EC67FE6FC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1960F5F8-4F7C-451F-8268-5EC67FE6FC18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{706A400F-797D-4DCC-B3CE-F4370A6D5BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{706A400F-797D-4DCC-B3CE-F4370A6D5BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{706A400F-797D-4DCC-B3CE-F4370A6D5BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{706A400F-797D-4DCC-B3CE-F4370A6D5BDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
