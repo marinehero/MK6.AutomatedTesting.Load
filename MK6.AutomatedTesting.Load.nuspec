@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>MK6.AutomatedTesting</id>
+    <id>MK6.AutomatedTesting.Load</id>
     <version>0.1</version>
     <authors>Market6</authors>
     <owners>Market6</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>https://github.com/market6/MK6.AutomatedTesting</projectUrl>
+    <projectUrl>https://github.com/market6/MK6.AutomatedTesting.Load</projectUrl>
     <iconUrl>http://www.market6.com/sites/all/themes/market6zen/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>Automated testing framework</description>
+    <description>Automated load testing framework</description>
     <tags>Load_testing</tags>
     <dependencies>
       <dependency id="Serilog" version="1.4" />

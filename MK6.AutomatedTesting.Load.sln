@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK6.AutomatedTesting", "MK6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{80743BD1-E2B3-42EF-89A3-780DD9641D7E}"
 	ProjectSection(SolutionItems) = preProject
-		MK6.AutomatedTesting.nuspec = MK6.AutomatedTesting.nuspec
+		MK6.AutomatedTesting.Load.nuspec = MK6.AutomatedTesting.Load.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK6.AutomatedTesting.Runner.Tests", "MK6.AutomatedTesting.Runner.Tests\MK6.AutomatedTesting.Runner.Tests.csproj", "{1960F5F8-4F7C-451F-8268-5EC67FE6FC18}"
