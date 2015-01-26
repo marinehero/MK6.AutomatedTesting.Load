@@ -54,8 +54,6 @@
     <Compile Include="LoadTestEnvironmentKeys.cs" />
     <Compile Include="LoadTestingScript.cs" />
     <Compile Include="LoadTestScriptHookBindings.cs" />
-    <Compile Include="ReportWriters\CSVContentReportWriter.cs" />
-    <Compile Include="ReportWriters\CSVReportWriter.cs" />
     <Compile Include="HttpRequestsStepRunner.cs" />
     <Compile Include="Requests\GetRequest.cs" />
     <Compile Include="Requests\FormPostRequest.cs" />

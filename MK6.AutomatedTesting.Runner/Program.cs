@@ -28,8 +28,7 @@ namespace MK6.AutomatedTesting.Runner
                 SetupLogging(environment);
                 SetupConsoleKeyHandlers(environment);
 
-                var results = RunTest(environment);
-                ReportResults(environment, results);
+                RunTest(environment);
             }
             catch (Exception ex)
             {
@@ -112,7 +111,7 @@ namespace MK6.AutomatedTesting.Runner
             Log.Information("Started LoadTester");
         }
 
-        private static IEnumerable<IDictionary<string, string>> RunTest(IDictionary<string, object> environment)
+        private static void RunTest(IDictionary<string, object> environment)
         {
             var context = new ScriptContext(GetScript(environment), environment);
             var runType = GetEnumFromEnvironment<RunType>(
@@ -124,10 +123,12 @@ namespace MK6.AutomatedTesting.Runner
             switch (runType)
             {
                 case RunType.FixedTime:
-                    return FixedTimeRunner.Run(context, workerCount);
+                    FixedTimeRunner.Run(context, workerCount);
+                    break;
                 case RunType.FixedIterations:
                 default:
-                    return FixedIterationsWorker.Run(context, workerCount);
+                    FixedIterationsWorker.Run(context, workerCount);
+                    break;
             }
         }
 
@@ -147,17 +148,6 @@ namespace MK6.AutomatedTesting.Runner
             }
 
             return enumValue;
-        }
-
-        private static void ReportResults(
-            IDictionary<string, object> environment,
-            IEnumerable<IDictionary<string, string>> results)
-        {
-            InstanceCreator
-                .CreateInstanceOf<IReportWriter>(
-                    environment[RunnerConfigKeys.ReportWriter] as string,
-                    args: new object[] { environment })
-                .Write(results);
         }
     }
 }

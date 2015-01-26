@@ -13,8 +13,6 @@ namespace MK6.AutomatedTesting
 
         public readonly IDictionary<string, object> Environment;
 
-        public readonly IList<IDictionary<string, string>> Results;
-
         public readonly CancellationToken CancellationToken;
 
         public WorkerContext(
@@ -23,7 +21,6 @@ namespace MK6.AutomatedTesting
         {
             this.WorkerIndex = workerIndex;
             this.Environment = new Dictionary<string, object>(scriptContext.Environment);
-            this.Results = new List<IDictionary<string, string>>();
 
             this.CancellationToken = scriptContext.CancellationToken;
             this.Script = scriptContext.Script;

@@ -7,14 +7,12 @@ namespace MK6.AutomatedTesting
 {
     public static class ScriptRunner
     {
-        public static IEnumerable<IDictionary<string, string>> Run(IterationContext context)
+        public static void Run(IterationContext context)
         {
             var cancellationToken = context.CancellationToken;
             var script = context.Script;
 
             script.PreScriptHook.Invoke(context);
-
-            var results = new List<IDictionary<string, string>>();
 
             try
             {
@@ -29,7 +27,7 @@ namespace MK6.AutomatedTesting
                         break;
                     }
 
-                    results.AddRange(step.Runner.Invoke(context, step, cancellationToken));
+                    step.Runner.Invoke(context, step, cancellationToken);
                 }
             }
             catch (Exception ex)
@@ -42,7 +40,7 @@ namespace MK6.AutomatedTesting
                 {
                     foreach (var step in script.FinallySteps)
                     {
-                        results.AddRange(step.Runner.Invoke(context, step, CancellationToken.None));
+                        step.Runner.Invoke(context, step, CancellationToken.None);
                     }
                 }
                 catch (Exception ex)
@@ -52,8 +50,6 @@ namespace MK6.AutomatedTesting
 
                 script.PostScriptHook.Invoke(context);
             }
-
-            return results;
         }
 
         private static void LogStepException(IterationContext context, Exception ex)

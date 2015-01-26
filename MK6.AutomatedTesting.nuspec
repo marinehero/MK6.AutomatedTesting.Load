@@ -16,7 +16,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="MK6.AutomatedTesting.Load\bin\Release\**\*.*" target="lib" />
+    <file src="MK6.AutomatedTesting.Load\bin\Release\**\*.*" target="lib\net45" />
     <file src="MK6.AutomatedTesting.Runner\bin\Release\**\*.*" target="tools" />
   </files>
 </package>

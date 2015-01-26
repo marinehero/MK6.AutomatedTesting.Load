@@ -8,7 +8,7 @@ namespace MK6.AutomatedTesting.Runner.Runners
 {
     public static class FixedTimeRunner
     {
-        public static IEnumerable<IDictionary<string, string>> Run(ScriptContext context, int workerCount)
+        public static void Run(ScriptContext context, int workerCount)
         {
             var workerContexts = Enumerable.Range(0, workerCount)
                 .Select(i => new WorkerContext(context, i))
@@ -19,8 +19,6 @@ namespace MK6.AutomatedTesting.Runner.Runners
                 .ToArray();
 
             Task.WaitAll(workers);
-
-            return workerContexts.SelectMany(tc => tc.Results);
         }
 
         private static void RunWorker(WorkerContext context)
@@ -31,7 +29,7 @@ namespace MK6.AutomatedTesting.Runner.Runners
             while(!context.CancellationToken.IsCancellationRequested)
             {
                 Log.Debug("Worker {0}, starting iteration {1}", context.WorkerIndex, iterationCounter);
-                context.Results.AddRange(ScriptRunner.Run(new IterationContext(context, iterationCounter)));
+                ScriptRunner.Run(new IterationContext(context, iterationCounter));
                 Log.Debug("Worker {0}, finished iteration {1}", context.WorkerIndex, iterationCounter);
 
                 iterationCounter += 1;

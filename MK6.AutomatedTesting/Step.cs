@@ -9,7 +9,7 @@ namespace MK6.AutomatedTesting
 {
     public abstract class Step
     {
-        public delegate IEnumerable<IDictionary<string, string>> RunStepDelegate(
+        public delegate void RunStepDelegate(
             IterationContext context,
             Step step,
             CancellationToken cancellationToken);

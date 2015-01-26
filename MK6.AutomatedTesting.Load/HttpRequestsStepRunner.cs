@@ -11,7 +11,7 @@ namespace MK6.AutomatedTesting.Load
 {
     public static class HttpRequestsStepRunner
     {
-        public static IEnumerable<IDictionary<string, string>> Run(
+        public static void Run(
             IterationContext context,
             Step step,
             CancellationToken cancellationToken)
@@ -45,8 +45,6 @@ namespace MK6.AutomatedTesting.Load
                 context,
                 requestTasks
                     .Select(r => r.Result.ExtractedContent));
-
-            return requestTasks.Select(r => r.Result.Response);
         }
 
         private static IDictionary<string, string> RunHttpRequest(
@@ -56,6 +54,7 @@ namespace MK6.AutomatedTesting.Load
             HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
+            var requestId = Guid.NewGuid();
             var originalUrl = request.RequestUri.ToString();
 
             var startTime = DateTime.Now;
@@ -64,19 +63,34 @@ namespace MK6.AutomatedTesting.Load
             try
             {
                 timer.Start();
+                Log.Information("Starting request {Data}",
+                    new 
+                    { 
+                        RequestId = requestId, 
+                        WorkerId = context.WorkerIndex, 
+                        WorkerCount = context.Environment["Workers"], 
+                        Iteration = context.IterationIndex, 
+                        Description = description, 
+                        OriginalUrl = originalUrl 
+                    });
                 var response = client.SendAsync(request, cancellationToken).Result;
-                
+
                 timer.Stop();
                 var endTime = DateTime.Now;
 
-                Log.Information(
-                    "Worker {4}, iteration {5}: Statistics - OriginalUrl: {0}, FinalUrl: {1}, Status: {2}, ResponseTime: {3}",
-                    originalUrl,
-                    response.RequestMessage.RequestUri.AbsolutePath,
-                    response.StatusCode,
-                    timer.ElapsedMilliseconds,
-                    context.WorkerIndex,
-                    context.IterationIndex);
+                Log.Information("Finished request {Data}",
+                    new
+                    {
+                        RequestId = requestId,
+                        WorkerId = context.WorkerIndex,
+                        WorkerCount = context.Environment["Workers"],
+                        Iteration = context.IterationIndex,
+                        Description = description, 
+                        FinalUrl = response.RequestMessage.RequestUri.AbsolutePath,
+                        Status = response.StatusCode,
+                        ResponseTime = timer.ElapsedMilliseconds,
+                        ResponseSize = response.Content.ReadAsByteArrayAsync().Result.Count()
+                    });
 
                 return BuildResponse(
                     context,
@@ -93,14 +107,14 @@ namespace MK6.AutomatedTesting.Load
                 timer.Stop();
                 Log.Information("Request was cancelled");
                 return BuildResponse(
-                    context, 
-                    description, 
-                    request, 
-                    startTime, 
-                    DateTime.UtcNow, 
-                    timer, 
-                    "Cancelled", 
-                    string.Empty, 
+                    context,
+                    description,
+                    request,
+                    startTime,
+                    DateTime.UtcNow,
+                    timer,
+                    "Cancelled",
+                    string.Empty,
                     ex.Message);
             }
             catch (Exception ex)
@@ -109,14 +123,14 @@ namespace MK6.AutomatedTesting.Load
                 Log.Error(ex, "Error during timed request to '{0}'", request.RequestUri.ToString());
 
                 return BuildResponse(
-                    context, 
-                    description, 
-                    request, 
-                    startTime, 
-                    DateTime.UtcNow, 
-                    timer, 
-                    "Error", 
-                    string.Empty, 
+                    context,
+                    description,
+                    request,
+                    startTime,
+                    DateTime.UtcNow,
+                    timer,
+                    "Error",
+                    string.Empty,
                     ex.Message);
             }
         }

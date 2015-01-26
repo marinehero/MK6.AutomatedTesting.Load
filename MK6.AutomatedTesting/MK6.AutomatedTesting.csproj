@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="EnvironmentKeys.cs" />
-    <Compile Include="IReportWriter.cs" />
     <Compile Include="IterationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script.cs" />
