@@ -55,6 +55,11 @@ namespace MK6.AutomatedTesting.Load
             CancellationToken cancellationToken)
         {
             var requestId = Guid.NewGuid();
+
+            request.Headers.Add("X-MK6LoadTest", "true");
+            request.Headers.Add("X-MK6LoadTest-Description", description);
+            request.Headers.Add("X-MK6LoadTest-RequestId", requestId.ToString());
+
             var originalUrl = request.RequestUri.ToString();
 
             var startTime = DateTime.Now;
