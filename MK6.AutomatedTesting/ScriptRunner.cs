@@ -1,6 +1,5 @@
 ﻿using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace MK6.AutomatedTesting

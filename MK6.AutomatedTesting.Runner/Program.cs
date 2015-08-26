@@ -19,6 +19,7 @@ namespace MK6.AutomatedTesting.Runner
                     return;
                 }
 
+
                 var configFilePath = args[0];
 
                 var environment = BuildEnvironment(configFilePath);
@@ -26,6 +27,8 @@ namespace MK6.AutomatedTesting.Runner
                 environment.Add(EnvironmentKeys.StartTime, DateTime.Now);
 
                 SetupLogging(environment);
+
+                
                 SetupConsoleKeyHandlers(environment);
 
                 RunTest(environment);
@@ -65,11 +68,9 @@ namespace MK6.AutomatedTesting.Runner
         {
             Console.CancelKeyPress += new ConsoleCancelEventHandler((s, e) =>
             {
-                if (e.SpecialKey == ConsoleSpecialKey.ControlC)
-                {
-                    ShutdownScriptExecution(environment);
-                    e.Cancel = true;
-                }
+                if (e.SpecialKey != ConsoleSpecialKey.ControlC) return;
+                ShutdownScriptExecution(environment);
+                e.Cancel = true;
             });
         }
 
@@ -103,11 +104,18 @@ namespace MK6.AutomatedTesting.Runner
 
         private static void SetupLogging(IDictionary<string, object> environment)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+            var loggerConfiguration = new LoggerConfiguration().MinimumLevel.Debug()
                 .WriteTo.ColoredConsole()
-                .WriteTo.RollingFile(@"Logs\log-{Date}.txt", retainedFileCountLimit: null)
-                .CreateLogger();
+                .WriteTo.RollingFile(@"Logs\log-{Date}.txt", retainedFileCountLimit: null);
+
+            if (environment.ContainsKey(EnvironmentKeys.UseSplunkLogging))
+            {
+                var splunkIp = environment[EnvironmentKeys.SplunkIp] as string;
+                var splunkPort = int.Parse(environment[EnvironmentKeys.SplunkPort] as string);
+                loggerConfiguration.WriteTo.SplunkViaTcp(splunkIp, splunkPort);
+            }
+           
+            Log.Logger = loggerConfiguration.CreateLogger();
             Log.Information("Started LoadTester");
         }
 
